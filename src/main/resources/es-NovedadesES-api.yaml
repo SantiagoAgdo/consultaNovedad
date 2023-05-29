@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  description: Servicio de entidad v1EsNovedadCDTDigitalNumeroDocumentoGet.
+  version: 0.0.1
+  title: NovedadES
+  contact:
+    name: MiBanco
+    url: https://www.mibanco.com.co/
+    email: api@mibanco.com.co
+  license:
+    name: GNU GPLv3
+    url: ‘https://www.gnu.org/licenses/gpl-3.0.html’
+tags:
+  - name: Consultar Novedad Por Numero De Documento
+    description: Consultar Novedad Por Numero De Documento
+
+#----------------------------
+#Endpoints del Entidad
+#----------------------------
+
+paths:
+  /v1/es/novedadCDTDigital:
+    get:
+      parameters:
+       - name: numeroDocumento
+         in: query
+         schema:
+           type: string
+      responses:
+        "200":
+          description: Consulta realizada.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NovedadCDTDigitalType"
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+
+#---------------------------------------------
+#Se declaran los Modelos/Schemas del servicio
+#---------------------------------------------
+components:
+  schemas:
+    NovedadCDTDigitalType:
+      type: object
+      properties:
+        id:
+          type: string
+        numeroDocumento:
+          type: string
+        codigoNovedad:
+          type: string
+        descripcionNovedad:
+          type: string
+          nullable: false
+          minLength: 1
+        fechaNovedad:
+          type: string
+          format: date-time
