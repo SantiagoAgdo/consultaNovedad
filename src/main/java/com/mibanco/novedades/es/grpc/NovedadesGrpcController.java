@@ -1,8 +1,8 @@
 package com.mibanco.novedades.es.grpc;
 
 import com.mibanco.novedades.es.ConsultaNovedadGrpcGrpc;
-import com.mibanco.novedades.es.ConsultaNovedadlGrpc;
-import com.mibanco.novedades.es.Creado;
+import com.mibanco.novedades.es.GetNovedadByDocumentRequest;
+import com.mibanco.novedades.es.NovedadResponse;
 import com.mibanco.novedades.es.controller.NovedadesController;
 import com.mibanco.novedades.es.dao.entity.NovedadesEntity;
 import com.mibanco.novedades.es.gen.type.NovedadCDTDigitalType;
@@ -32,7 +32,7 @@ public class NovedadesGrpcController extends ConsultaNovedadGrpcGrpc.ConsultaNov
 
     @Override
     @Blocking
-    public void consultarNovedad(ConsultaNovedadlGrpc request, StreamObserver<Creado> responseObs){
+    public void consultarNovedad(GetNovedadByDocumentRequest request, StreamObserver<NovedadResponse> responseObs){
 
         logger.info("Inicia Consulta Novedad por numero de documento mediante GRPC");
 
@@ -42,8 +42,8 @@ public class NovedadesGrpcController extends ConsultaNovedadGrpcGrpc.ConsultaNov
             List<NovedadCDTDigitalType> novedadCDTDigitalType =
                     novedadesConsultaDocumentoImpl.consultarNovedadesPorNumeroDocumento(novedadesEntity.getNumeroDocumento());
 
-            Creado consultaNovedadEntidad =
-                    Creado.newBuilder().setNovedadCDTDigital(consultaNovedadesMapperGrpc.novedadGrpcToGrpc(novedadCDTDigitalType.get(0))).build();
+            NovedadResponse consultaNovedadEntidad =
+                    NovedadResponse.newBuilder().setNovedadCDTDigital(consultaNovedadesMapperGrpc.novedadGrpcToGrpc(novedadCDTDigitalType.get(0))).build();
 
             responseObs.onNext(consultaNovedadEntidad);
 

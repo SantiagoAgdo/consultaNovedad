@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 
 @QuarkusTest
 public class NovedadesControllerTest {
@@ -37,14 +39,14 @@ public class NovedadesControllerTest {
         Mockito.when(objectMapperMock.readValue(ArgumentMatchers.any(byte[].class), ArgumentMatchers.any(Class.class)))
                 .thenReturn(new NovedadCDTDigitalType());
 
-        String json = new String(Files.readAllBytes(Paths.get("src/main/resources/esNovedadesES-api.json")), StandardCharsets.UTF_8);
+        String json = new String(Files.readAllBytes(Paths.get("src/main/resources/es-NovedadesES-api.json")), StandardCharsets.UTF_8);
         NovedadCDTDigitalType novedadCDTDigitalType = objectMapper.readValue(json, NovedadCDTDigitalType.class);
 
         RestAssured.given()
                 .contentType(ContentType.JSON)
                 .body(novedadCDTDigitalType)
                 .when()
-                .post("v1/es/novedadCDTDigital")
+                .get("v1/es/novedadCDTDigital?numeroDocumento=7654")
                 .then()
                 .statusCode(200);
     }

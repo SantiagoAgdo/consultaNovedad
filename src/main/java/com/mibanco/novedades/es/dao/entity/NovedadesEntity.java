@@ -11,7 +11,6 @@ import java.util.Date;
 public class NovedadesEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String numeroDocumento;
     private String codigoNovedad;

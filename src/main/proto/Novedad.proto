@@ -1,13 +1,11 @@
 syntax = "proto3";
-
-
 option java_multiple_files = true;
 option java_package = "com.mibanco.novedades.es";
 option java_outer_classname = "ConsultaNovedadesGrpc";
 
 package ConsultaNovedadesGrpc;
 
-message ConsultaNovedadlGrpc {
+message GetNovedadByDocumentRequest {
   string id = 1;
   string numeroDocumento = 2;
   string codigoNovedad =3;
@@ -15,9 +13,9 @@ message ConsultaNovedadlGrpc {
   string fechaNovedad = 5;
 }
 
-message Creado{
-  ConsultaNovedadlGrpc novedadCDTDigital = 1;
+message NovedadResponse{
+  GetNovedadByDocumentRequest novedadCDTDigital = 1;
 }
 service ConsultaNovedadGrpc {
-  rpc consultarNovedad(ConsultaNovedadlGrpc) returns (Creado);
+  rpc consultarNovedad(GetNovedadByDocumentRequest) returns (NovedadResponse);
 }
